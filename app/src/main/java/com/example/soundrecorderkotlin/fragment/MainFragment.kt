@@ -12,7 +12,6 @@ import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : BaseFragment() {
 
-//    var titles = ArrayList<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,8 +24,6 @@ class MainFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        titles.add("Orange")
-//        titles.add("Tomato")
 
         toolbar.title = "orange"
         toolbar.popupTheme = R.style.ThemeOverlay_AppCompat_Light
@@ -64,10 +61,10 @@ class MainFragment : BaseFragment() {
                     return RecordFragment.newInstance(position)
                 }
                 1 -> {
-                    return RecordFragment.newInstance(position)
+                    return FileViewerFragment.newInstance(position)
                 }
             }
-            return return RecordFragment.newInstance(position)
+            return FileViewerFragment.newInstance(position)
         }
 
         override fun getCount(): Int {

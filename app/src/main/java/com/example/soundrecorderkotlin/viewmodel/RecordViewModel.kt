@@ -7,6 +7,7 @@ import com.example.soundrecorderkotlin.base.BaseViewModel
 class RecordViewModel : BaseViewModel() {
 
     var _floatClick = MutableLiveData<String>()
+    var _pauseClick = MutableLiveData<String>()
 
     var textRecord: MutableLiveData<String> = MutableLiveData()
 
@@ -18,4 +19,7 @@ class RecordViewModel : BaseViewModel() {
         _floatClick.value = ""
     }
 
+    fun onPauseClick() {
+        _pauseClick.value = ""
+    }
 }

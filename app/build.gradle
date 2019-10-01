@@ -52,4 +52,19 @@ dependencies {
 
     implementation 'com.melnykov:floatingactionbutton:1.1.0'
     implementation 'com.jpardogo.materialtabstrip:library:1.0.6'
+
+    // Material components
+    implementation 'com.google.android.material:material:1.0.0-beta01'
+
+    // Room database
+    def room_version = "2.0.0-beta01"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    kapt 'androidx.room:room-compiler:2.0.0-beta01'
+
+    // Android KTX
+    implementation 'androidx.core:core-ktx:1.0.0-beta01'
+
+    // Anko Commons
+    implementation "org.jetbrains.anko:anko-commons:0.10.5"
 }

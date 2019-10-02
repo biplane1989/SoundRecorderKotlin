@@ -13,4 +13,41 @@
         tools:layout="@layout/fragment_main">
 
     </fragment>
+
+    <fragment
+        android:id="@id/fra_main"
+        android:name="com.example.soundrecorderkotlin.fragment.MainFragment"
+        android:label="Fragment Main"
+        tools:layout="@layout/activity_main">
+        <action
+            android:id="@+id/acction_main_to_mediaplay"
+            app:destination="@+id/fra_mediaplay" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_record"
+        android:name="com.example.soundrecorderkotlin.fragment.RecordFragment"
+        android:label="Fragment Record"
+        tools:layout="@layout/fragment_record">
+
+        <action
+            android:id="@+id/acction_record_to_mediaplay"
+            app:destination="@+id/fra_mediaplay" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_file_viewer"
+        android:name="com.example.soundrecorderkotlin.fragment.FileViewerFragment"
+        android:label="Fragment File View"
+        tools:layout="@layout/fragment_file_viewer">
+        <action
+            android:id="@+id/acction_fileviewwr_to_mediaplay"
+            app:destination="@id/fra_mediaplay" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fra_mediaplay"
+        android:name="com.example.soundrecorderkotlin.fragment.MediaPlayFragment"
+        android:label="Fragment Mediaplay"
+        tools:layout="@layout/fragment_media_playback" />
 </navigation>

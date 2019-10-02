@@ -67,4 +67,7 @@ dependencies {
 
     // Anko Commons
     implementation "org.jetbrains.anko:anko-commons:0.10.5"
+
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.1"
 }

@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.NavHostFragment
 import androidx.viewpager.widget.ViewPager
 import com.astuetz.PagerSlidingTabStrip
 import com.example.soundrecorderkotlin.R
@@ -76,8 +77,6 @@ class RecordFragment : BaseFragment() {
             onRecord(start)
             start = !start
 
-
-
         })
 
 //        recordViewModel._pauseClick.observe(recodeBinding.lifecycleOwner!!, Observer {
@@ -126,7 +125,7 @@ class RecordFragment : BaseFragment() {
 
             chronometer.stop()
             chronometer.base = SystemClock.elapsedRealtime()
-            timeWhenPause =0
+            timeWhenPause = 0
             recording_status_text.text = "tomato"
 
             doAsync {
@@ -138,7 +137,7 @@ class RecordFragment : BaseFragment() {
     }
 
     private fun onPauseRecord(pause: Boolean) {
-        if(pause){
+        if (pause) {
 
         }
     }

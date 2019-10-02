@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.soundrecorderkotlin.R
 import com.example.soundrecorderkotlin.adapter.FileViewerAdapter
@@ -18,11 +20,12 @@ import com.example.soundrecorderkotlin.databinding.FragmentFileViewerBinding
 import com.example.soundrecorderkotlin.viewmodel.CardViewItem
 import com.example.soundrecorderkotlin.viewmodel.FileViewerViewModel
 import kotlinx.android.synthetic.main.fragment_file_viewer.*
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 class FileViewerFragment : BaseFragment(), OnClicked {
-
 
     lateinit var db: DataSingleton
     lateinit var fileViewerViewModel: FileViewerViewModel
@@ -55,60 +58,63 @@ class FileViewerFragment : BaseFragment(), OnClicked {
 
     override fun onResume() {
         super.onResume()
-        loadData()
+        var arrRecord = ArrayList<CardViewItem>()
+        CoroutineScope(Dispatchers.Default).launch {
+            arrRecord = loadData()
+            loadView(arrRecord)
+
+        }
     }
 
-    override fun onPause() {
-        super.onPause()
-        Log.d("002", "orange")
-
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d("002", "orange")
-    }
-
-    override fun onStart() {
-        super.onStart()
-        Log.d("002", "orange")
-
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loadData()
+        var arrRecord = ArrayList<CardViewItem>()
+        CoroutineScope(Dispatchers.Default).launch {
+            arrRecord = loadData()
+            loadView(arrRecord)
+        }
     }
 
-    fun loadData() {
-        doAsync {
-            var list = db.recordDAO().getAllRecords()
+    suspend fun loadData(): ArrayList<CardViewItem> {
 
-            var arrRecord = ArrayList<CardViewItem>()
+        val list = doWord(db).await()
+        var arrRecord = ArrayList<CardViewItem>()
 
-            var index = 0
-            for (record in list) {
-                var card = CardViewItem(
-                    list.get(index).recordingName,
-                    list.get(index).filePath,
-                    list.get(index).length.toString()
-                )
-                arrRecord.add(card)
-                index++
-            }
+        var index = 0
 
-            uiThread {
-                var fileViewerAdapter = FileViewerAdapter(arrRecord, viewLifecycleOwner)
-                rv_list_record.layoutManager = LinearLayoutManager(context)
-                rv_list_record.setHasFixedSize(true)
-                rv_list_record.adapter = fileViewerAdapter
-                rv_list_record.adapter!!.notifyDataSetChanged()
-            }
+        for (record in list) {
+            var card = CardViewItem(
+                list.get(index).recordingName,
+                list.get(index).filePath,
+                list.get(index).length.toString()
+            )
+            card.setOnClick(this)
+            arrRecord.add(card)
+            index++
         }
+        return arrRecord
+    }
+
+    fun loadView(arrRecord: ArrayList<CardViewItem>) {
+        var fileViewerAdapter = FileViewerAdapter(arrRecord, viewLifecycleOwner)
+        rv_list_record.layoutManager = LinearLayoutManager(context)
+        rv_list_record.setHasFixedSize(true)
+        rv_list_record.adapter = fileViewerAdapter
+        rv_list_record.adapter!!.notifyDataSetChanged()
+    }
+
+    fun doWord(db: DataSingleton) = CoroutineScope(Dispatchers.Default).async {
+        var list = db.recordDAO().getAllRecords()
+        return@async list
     }
 
     override fun onClick() {
         Toast.makeText(context, "Orange", Toast.LENGTH_LONG).show()
         Log.d("001", "orange")
+        val directions = MainFragmentDirections.acctionMainToMediaplay()
+        NavHostFragment.findNavController(this).navigate(directions)
+
+//        findNavController().navigate(R.id.acction_fileviewwr_to_mediaplay)
     }
 }

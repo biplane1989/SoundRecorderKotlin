@@ -38,7 +38,6 @@ class FileViewerAdapter(var list: ArrayList<CardViewItem>, val lifecycleOwner: L
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.setBingding(list.get(position))
 
-
     }
 
     inner class ViewHolder(var binding: CardViewBinding) : RecyclerView.ViewHolder(binding.root) {

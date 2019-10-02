@@ -12,6 +12,7 @@ class CardViewItem(var name: String?, var length: String, var time: String) {
 
     lateinit var onClicked : OnClicked
 
+
     fun setOnClick(clicked: OnClicked){
         onClicked = clicked
     }
